@@ -28,6 +28,6 @@ public class EmpleadoService {
     }
 
     public void eliminarEmpleadoPorId(Integer id) {
-        empleadoRepository.deleteById(id);
+        empleadoRepository.deleteById(id); 
     }
 }
