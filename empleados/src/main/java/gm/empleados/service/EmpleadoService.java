@@ -14,8 +14,14 @@ public class EmpleadoService {
     private IEmpleadoRepository empleadoRepository;
 
 
-    public List<Empleado> listarEmpleados(){
-        return empleadoRepository.findAll();
+    public List<Empleado> listarEmpleados() {
+        List<Empleado> listaEmpleados = empleadoRepository.findAll();
+        if(listaEmpleados.isEmpty()) {
+            System.out.println("No se han encontrado empleados");
+        }else{
+            System.out.println("Empleados encontrados "+ listaEmpleados.size() + " empleados");
+        }
+        return listaEmpleados;
     }
 
     public Empleado buscarEmpleadoPorId(Integer id){
