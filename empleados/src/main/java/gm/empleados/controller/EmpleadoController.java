@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,5 +41,29 @@ public class EmpleadoController {
         logger.info("Empleado a agregar: " + empleado);
         empleadoService.agregarEmpleado(empleado);
         return "redirect:/"; //redirige al path
+    }
+
+    @RequestMapping(value="/modificar", method = RequestMethod.GET)
+    public String modificar(@RequestParam int idEmpleado, ModelMap modelo) {
+        Empleado empleado = empleadoService.buscarEmpleadoPorId(idEmpleado);
+        logger.info("Empleado a modificar: " + empleado);
+        modelo.put("empleado", empleado);
+        return "modificar"; //mostrar modificar.jsp
+    }
+
+    @RequestMapping(value = "/modificar", method = RequestMethod.POST)
+    public String modificar(@ModelAttribute("empleadoForm") Empleado empleado){
+        logger.info("Empleado a modificar: " + empleado);
+        empleadoService.agregarEmpleado(empleado);
+        return "redirect:/"; //redirigimos al controlador "/"
+
+    }
+
+    @RequestMapping(value="/eliminar", method = RequestMethod.GET)
+    public String eliminar(@RequestParam int idEmpleado) {
+        Empleado aEliminar = empleadoService.buscarEmpleadoPorId(idEmpleado);
+        logger.info("Empleado buscado para eliminar: " + aEliminar);
+        empleadoService.eliminarEmpleadoPorId(aEliminar.getIdEmpleado());
+        return "redirect:/";
     }
 }
